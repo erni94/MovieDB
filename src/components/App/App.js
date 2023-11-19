@@ -2,18 +2,69 @@ import React from 'react';
 import './style.css';
 import APIClient from "../../services/api-client";
 import FilmCard from "../film-card";
+import { Spin, Alert } from 'antd';
+import SearchBar from "../search-bar";
 
-const apiClient = new APIClient();
+class App extends React.Component {
 
-const filmObject = await apiClient.searchMovies('return');
+    constructor() {
+        super();
+        this.apiClient = new APIClient();
+        this.state = {
+            filmObject: [],
+            loading: true,
+            error: null,
+        };
+        this.getFilms('avengers');
+    }
 
-console.log(filmObject);
-function App() {
-    return (
-        <div className="film-card">
-            <FilmCard />
-        </div>
-    );
+
+
+    getFilms = (text) => {
+        if (!navigator.onLine) {
+            this.setState({ error: 'No internet connection.' });
+            return;
+        }
+        this.apiClient.searchMovies(text)
+            .then(({ results }) => {
+                this.setState({ filmObject: results, loading: false });
+            })
+            .catch((error) => {
+                this.setState({ error: 'Failed to load films.' });
+            });
+    }
+
+
+    render() {
+        const {filmObject, loading, error} = this.state;
+
+
+        const renderFilmListOrSpinner = () => {
+            if (loading) {
+                return <Spin size="large" />;
+            } else {
+                if (filmObject.length === 0) {
+                    return <h2>No films found.</h2>;
+                } else {
+                    return filmObject.map((film) => (
+                        <FilmCard key={film.id} filmObject={film} />
+                    ));
+                }
+            }
+        };
+
+        if (error) {
+            return <Alert message="Error" description={error} type="error" />;
+        }
+
+        return (<>
+            <SearchBar getFilms={this.getFilms}/>
+            <div className="film-cards">
+                {renderFilmListOrSpinner()}
+            </div>
+            </>
+        );
+    }
 }
 
 export default App;

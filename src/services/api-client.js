@@ -2,9 +2,9 @@ export default class APIClient {
     apiKey = 'b4f44cfad86e3e0257ec8df07ed179f6';
     baseURL = 'https://api.themoviedb.org/3';
 
-    async searchMovies(query) {
+    async searchMovies(query, page = 1) {
         const searchTerm = encodeURIComponent(query);
-        const apiUrlSearch = `${this.baseURL}/search/movie?api_key=${this.apiKey}&query=${searchTerm}`;
+        const apiUrlSearch = `${this.baseURL}/search/movie?api_key=${this.apiKey}&query=${searchTerm}&page=${page}`;
 
         const response = await fetch(apiUrlSearch);
 
@@ -12,7 +12,7 @@ export default class APIClient {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.json();
-        return data.results;
+        return await response.json();
+
     }
 }

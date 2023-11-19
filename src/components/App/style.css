@@ -5,3 +5,17 @@
     grid-column-gap: 36px;
     grid-row-gap: 37px;
 }
+
+.ant-spin {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ant-alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
