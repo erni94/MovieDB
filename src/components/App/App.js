@@ -43,7 +43,7 @@ componentDidMount() {
                 console.log(total_pages)
                 this.setState({ filmObject: results, loading: false, totalPage: total_pages, searchTerm: text });
             })
-            .catch((error) => {
+            .catch(() => {
                 this.setState({ error: 'Failed to load films.', loading: false });
             });
     }
