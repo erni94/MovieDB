@@ -23,15 +23,16 @@ class App extends React.Component {
 
 
 
-componentDidMount() {
-        this.setState({ isMounted: true }, () => {
-            this.getFilms('avengers', this.state.currentPage);
-        });
-    }
+        componentDidMount() {
+            if(!(localStorage.getItem('guestSessionId'))) {
+                this.apiClient.createGuestSession();
+            }
+            this.setState({ isMounted: true }, () => {
+                this.getFilms('avengers', this.state.currentPage);
+            });
+        }
 
     getFilms = (text, page) => {
-        /*const { searchTerm } = this.state;*/
-       /* const searchQuery = searchTerm || text; */// Use searchTerm if available, else use default text
 
         if (!navigator.onLine) {
             this.setState({ error: 'No internet connection.' });
@@ -50,7 +51,7 @@ componentDidMount() {
 
     onChangePage = (page) => {
         this.setState({ currentPage: page });
-        this.getFilms(this.state.searchTerm, page); // Update films based on the selected page and search term from state
+        this.getFilms(this.state.searchTerm, page);
     }
 
 
