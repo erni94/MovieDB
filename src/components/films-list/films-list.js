@@ -41,7 +41,6 @@ class FilmsList extends React.Component {
         this.setState({ loading: true });
         this.apiClient.searchMovies(text, page)
             .then(({ results, total_pages }) => {
-                console.log(total_pages)
                 this.setState({ filmObject: results, loading: false, totalPage: total_pages, searchTerm: text });
             })
             .catch(() => {

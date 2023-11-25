@@ -1,6 +1,8 @@
 import React from 'react';
 import './style.css';
 import { format, parseISO } from 'date-fns';
+import RateSelector from "../rate-selector/rate-selector";
+import ShowRating from "../show-rating/show-rating";
 
 function cutText(text, maxLength) {
     if (text.length <= maxLength) {
@@ -23,7 +25,7 @@ function FilmCard(props){
 
     const filmObject = props.filmObject;
     const releaseDate = format(parseISO(filmObject.release_date), 'MMMM d, yyyy');
-    const textShortened = cutText(filmObject.overview, 250);
+    const textShortened = cutText(filmObject.overview, 150);
 
 
 
@@ -40,7 +42,11 @@ function FilmCard(props){
                         <div className="genre">Drama</div>
                     </div>
                     <p className="synopsis">{textShortened}</p>
-                </div>
+                    <RateSelector id={filmObject.id}/>
+                    <ShowRating
+                        value={filmObject.vote_average}
+                    />
+            </div>
         </div>
     );
 }

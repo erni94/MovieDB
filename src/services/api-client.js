@@ -32,7 +32,7 @@ export default class APIClient {
     }
 
     async getRatedFilms(sessionID, page = 1) {
-        const response = await fetch(`https://api.themoviedb.org/3/guest_session/${sessionID}/rated/movies?language=en-US&page=${page}&sort_by=created_at.asc'`, {
+        const response = await fetch(`https://api.themoviedb.org/3/guest_session/${sessionID}/rated/movies?language=en-US&page=${page}&sort_by=created_at.asc`, {
             method: 'GET',
             headers: {
                 accept: 'application/json',
@@ -41,4 +41,25 @@ export default class APIClient {
         })
         return await response.json();
     }
+
+
+    async setRating(sessionID, movieID, value) {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}/rating?guest_session_id=${sessionID}`,
+            {
+                method: 'POST',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: this.bearer,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    value: value
+                })
+            })
+        const jsonResponse = await response.json();
+        if (!jsonResponse.success) {
+            throw new Error(`HTTP error! Status: ${jsonResponse.status_message}`);
+        }
+    }
+
 }

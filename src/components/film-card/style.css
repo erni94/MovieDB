@@ -29,6 +29,7 @@
 }
 
 .info {
+    position: relative;
     padding-left: 20px;
     display: grid;
     grid-template-columns: 1fr;
@@ -43,6 +44,7 @@
 }
 
 .title {
+    width: 200px;
     padding-right: 7px;
     grid-area: title;
     margin-top: 12px;

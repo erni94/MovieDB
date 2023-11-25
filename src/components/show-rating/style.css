@@ -1,0 +1,30 @@
+.show-rating {
+    position: absolute;
+    display: flex;
+    border-radius: 50%;
+    border: 2px solid #000;
+    width: 30px;
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    right: 9px;
+    top: 12px;
+}
+
+.rateHigh {
+    border-color: #66E900;
+}
+
+.rate35 {
+    border-color: #E97E00;
+}
+
+.rate57 {
+    border-color: #E9D100;
+}
+
+.rate03 {
+    border-color: #E90000
+}
