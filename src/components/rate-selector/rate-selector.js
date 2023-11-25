@@ -11,6 +11,7 @@ const RateChange = (value, movieID) => {
 }
 const RateSelector = (props) => {
     const { value } = props;
+    console.log(value)
     return (
         <Rate
             defaultValue={0}

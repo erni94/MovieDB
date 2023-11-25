@@ -17,11 +17,10 @@ export default class APIClient {
     }
 
     async createGuestSession() {
-        const response = await fetch('https://api.themoviedb.org/3/authentication/guest_session/new', {
+        const response = await fetch(`https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${this.apiKey}`, {
             method: 'GET',
             headers: {
                 accept: 'application/json',
-                Authorization: this.bearer
             }
         });
         const jsonResponse = await response.json();
@@ -32,11 +31,10 @@ export default class APIClient {
     }
 
     async getRatedFilms(sessionID, page = 1) {
-        const response = await fetch(`https://api.themoviedb.org/3/guest_session/${sessionID}/rated/movies?language=en-US&page=${page}&sort_by=created_at.asc`, {
+        const response = await fetch(`https://api.themoviedb.org/3/guest_session/${sessionID}/rated/movies?&page=${page}&sort_by=created_at.asc&api_key=${this.apiKey}`, {
             method: 'GET',
             headers: {
                 accept: 'application/json',
-                Authorization: this.bearer
             }
         })
         return await response.json();
@@ -44,12 +42,11 @@ export default class APIClient {
 
 
     async setRating(sessionID, movieID, value) {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}/rating?guest_session_id=${sessionID}`,
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}/rating?guest_session_id=${sessionID}&api_key=${this.apiKey}`,
             {
                 method: 'POST',
                 headers: {
                     accept: 'application/json',
-                    Authorization: this.bearer,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({

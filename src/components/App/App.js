@@ -31,7 +31,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <Tabs defaultActiveKey="Search" items={this.items} onChange={this.onChange} />
+            <Tabs defaultActiveKey="Search" items={this.items} onChange={this.onChange} destroyInactiveTabPane={true} centered={true}/>
         )
 
     }

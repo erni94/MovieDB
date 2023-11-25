@@ -42,7 +42,10 @@ function FilmCard(props){
                         <div className="genre">Drama</div>
                     </div>
                     <p className="synopsis">{textShortened}</p>
-                    <RateSelector id={filmObject.id}/>
+                    <RateSelector
+                        id={filmObject.id}
+                        value={filmObject.rating}
+                    />
                     <ShowRating
                         value={filmObject.vote_average}
                     />
