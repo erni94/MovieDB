@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './style.css';
 import { format, parseISO } from 'date-fns';
 import RateSelector from "../rate-selector/rate-selector";
 import ShowRating from "../show-rating/show-rating";
+import Genres from "../genres/genres";
 
 function cutText(text, maxLength) {
     if (text.length <= maxLength) {
@@ -10,13 +11,12 @@ function cutText(text, maxLength) {
     }
 
     const shortened = text.substring(0, maxLength);
-    // Проверяем, чтобы не обрезать посреди слова
+
     const lastSpaceIndex = shortened.lastIndexOf(' ');
     if (lastSpaceIndex > 0) {
         return shortened.substring(0, lastSpaceIndex) + '...';
     }
 
-    // Если текст состоит из одного длинного слова, просто обрезаем до maxLength
     return shortened + '...';
 }
 
@@ -24,10 +24,24 @@ function cutText(text, maxLength) {
 function FilmCard(props){
 
     const filmObject = props.filmObject;
-    const releaseDate = format(parseISO(filmObject.release_date), 'MMMM d, yyyy');
+
+    let releaseDate = 'Not found';
+    if (filmObject.release_date) {
+        releaseDate = format(parseISO(filmObject.release_date), 'MMMM d, yyyy');
+    }
+
     const textShortened = cutText(filmObject.overview, 150);
 
+    const genresList = useContext(Genres.Context)
 
+
+    const GenreComponent = ({ genre }) => {
+        return (
+            <div className="genre">{genre}</div>
+        );
+    };
+
+    const foundGenres = genresList.filter(genre => filmObject.genre_ids.includes(genre.id));
 
     return (
         <div className="film-card">
@@ -38,8 +52,9 @@ function FilmCard(props){
                     <h1 className="title">{filmObject.title}</h1>
                     <div className="release-date">{releaseDate}</div>
                     <div className="genres">
-                        <div className="genre">Action</div>
-                        <div className="genre">Drama</div>
+                        {foundGenres.map(genre => (
+                            <GenreComponent key={genre.id} genre={genre.name} />
+                        ))}
                     </div>
                     <p className="synopsis">{textShortened}</p>
                     <RateSelector

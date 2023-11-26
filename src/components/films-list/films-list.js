@@ -28,7 +28,7 @@ class FilmsList extends React.Component {
             this.apiClient.createGuestSession();
         }
         this.setState({ isMounted: true }, () => {
-            this.getFilms('avengers', this.state.currentPage);
+            this.getPopularFilms(this.state.currentPage);
         });
     }
 
@@ -48,9 +48,24 @@ class FilmsList extends React.Component {
             });
     }
 
+    getPopularFilms = (page) => {
+        this.apiClient.popularMovies(page)
+            .then(({ results, total_pages }) => {
+                this.setState({ filmObject: results, loading: false, totalPage: total_pages });
+            })
+            .catch(() => {
+                this.setState({ error: 'Failed to load films.', loading: false });
+            });
+    }
+
     onChangePage = (page) => {
         this.setState({ currentPage: page });
-        this.getFilms(this.state.searchTerm, page);
+        if (this.state.searchTerm) {
+            this.getFilms(this.state.searchTerm, page);
+        }
+        else {
+            this.getPopularFilms(page);
+        }
     }
 
 

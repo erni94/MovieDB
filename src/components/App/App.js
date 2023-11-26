@@ -1,8 +1,12 @@
 import React from 'react';
-import './style.css';
 import RatedFilms from "../rated-films/rated-films";
 import FilmsList from "../films-list/films-list";
 import { Tabs } from 'antd';
+import Genres from "../genres/genres";
+
+import 'typeface-inter';
+import './style.css';
+
 
 
 class App extends React.Component {
@@ -31,7 +35,9 @@ class App extends React.Component {
 
     render() {
         return (
+            <Genres.Provider>
             <Tabs defaultActiveKey="Search" items={this.items} onChange={this.onChange} destroyInactiveTabPane={true} centered={true}/>
+            </Genres.Provider>
         )
 
     }

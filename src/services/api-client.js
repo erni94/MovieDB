@@ -1,11 +1,22 @@
 export default class APIClient {
     apiKey = 'b4f44cfad86e3e0257ec8df07ed179f6';
     baseURL = 'https://api.themoviedb.org/3';
-    bearer = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNGY0NGNmYWQ4NmUzZTAyNTdlYzhkZjA3ZWQxNzlmNiIsInN1YiI6IjY1NTBiMGQ2ZDRmZTA0MDBjNDFmMjc1NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-AX0W0GylIgKco8vU3YtpUwrzRTt6_CTNgzImjDE_bY';
 
     async searchMovies(query, page = 1) {
         const searchTerm = encodeURIComponent(query);
         const apiUrlSearch = `${this.baseURL}/search/movie?api_key=${this.apiKey}&query=${searchTerm}&page=${page}`;
+
+        const response = await fetch(apiUrlSearch);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        return await response.json();
+    }
+
+    async popularMovies(page = 1) {
+        const apiUrlSearch = `${this.baseURL}/movie/popular?api_key=${this.apiKey}&page=${page}`;
 
         const response = await fetch(apiUrlSearch);
 
@@ -57,6 +68,20 @@ export default class APIClient {
         if (!jsonResponse.success) {
             throw new Error(`HTTP error! Status: ${jsonResponse.status_message}`);
         }
+    }
+
+    async getGenres() {
+        const response = await fetch('https://api.themoviedb.org/3/genre/movie/list', {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNGY0NGNmYWQ4NmUzZTAyNTdlYzhkZjA3ZWQxNzlmNiIsInN1YiI6IjY1NTBiMGQ2ZDRmZTA0MDBjNDFmMjc1NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-AX0W0GylIgKco8vU3YtpUwrzRTt6_CTNgzImjDE_bY'
+            }
+        });
+        const jsonResponse = await response.json();
+
+        return jsonResponse.genres;
+
     }
 
 }

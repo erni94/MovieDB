@@ -14,6 +14,7 @@ const CustomPagination = ({ currentPage, totalPage, onChangePage }) => {
                 onChange={handlePageChange}
                 pageSize={1}
                 showSizeChanger={false}
+                hideOnSinglePage={true}
             />
         </div>
     );
