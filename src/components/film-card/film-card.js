@@ -40,9 +40,7 @@ function FilmCard(props){
             <div className="genre">{genre}</div>
         );
     };
-
     const foundGenres = genresList.filter(genre => filmObject.genre_ids.includes(genre.id));
-
     return (
         <div className="film-card">
             <div className="poster">
@@ -59,10 +57,10 @@ function FilmCard(props){
                     <p className="synopsis">{textShortened}</p>
                     <RateSelector
                         id={filmObject.id}
-                        value={filmObject.rating}
+                        value={filmObject.rating || parseFloat(localStorage.getItem(filmObject.id))}
                     />
                     <ShowRating
-                        value={filmObject.vote_average}
+                            value = {filmObject.vote_average}
                     />
             </div>
         </div>

@@ -28,3 +28,9 @@
 .rate03 {
     border-color: #E90000
 }
+
+@media only screen and (max-width: 768px) {
+    .show-rating {
+        right: 80px;
+    }
+}

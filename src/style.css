@@ -12,3 +12,17 @@ body {
     width: 1010px;
     margin: 0 auto;
 }
+
+@media only screen and (max-width: 768px) {
+    .root {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+
+}
